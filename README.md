@@ -1,161 +1,144 @@
-# Fatimah<!DOCTYPE html>
+# Fatimah<!DOCTYPE html><!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حساب عمر الطفل</title>
+<title>حساب عمر الطفل للروضة</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/hijri-date/lib/safe.js"></script>
 
 <style>
 body{
-font-family:'Cairo',sans-serif;
-text-align:center;
-margin:0;
-color:#fff;
-background: linear-gradient(270deg,#ff9de6,#bfa6ff,#8ed6ff);
-background-size:600% 600%;
-animation: gradientMove 8s ease infinite;
+    margin:0;
+    font-family:'Cairo',sans-serif;
+    direction:rtl;
+    text-align:center;
+    color:#333;
+
+    /* صورة خلفية طفل كرتوني */
+    background:url("https://cdn.pixabay.com/photo/2017/01/31/13/14/back-to-school-2022464_1280.png") no-repeat center center fixed;
+    background-size:cover;
 }
 
-/* تموج الخلفية */
-@keyframes gradientMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-/* زخارف أزهار */
-body::before{
-content:"🌸 🌼 🌺 🌸 🌼 🌺";
-font-size:40px;
-position:fixed;
-top:10px;
-left:10px;
-opacity:0.25;
-}
-
-/* الترويسة */
-.header{
-background:white;
-color:#6a5acd;
-padding:12px;
-font-size:20px;
-font-weight:bold;
-}
-
-.header img{
-width:60px;
-vertical-align:middle;
+/* طبقة شفافة لراحة العين */
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.65);
 }
 
 .container{
-background:white;
-color:#333;
-margin:40px auto;
-padding:30px;
-border-radius:25px;
-width:50%;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    position:relative;
+    background:white;
+    width:50%;
+    margin:60px auto;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    z-index:1;
+}
+
+h1{
+    font-size:36px;
 }
 
 input,button{
-padding:12px;
-font-size:18px;
-border-radius:12px;
-border:none;
-margin-top:10px;
+    padding:14px;
+    margin:10px;
+    font-size:20px;
+    border-radius:10px;
+    border:1px solid #ccc;
 }
 
 button{
-background:#ff7ad9;
-color:white;
-cursor:pointer;
+    background:#ff7aa2;
+    color:white;
+    border:none;
+    cursor:pointer;
 }
 
 button:hover{
-background:#ff4ec7;
+    background:#ff4d85;
 }
 
 .result{
-margin-top:20px;
-font-size:22px;
-color:#6a5acd;
+    margin-top:20px;
+    font-size:24px;
+    line-height:1.8;
 }
 
-.print-btn{
-background:#6a5acd;
-margin-top:15px;
-}
-
-footer{
-margin-top:40px;
-font-size:18px;
+.footer{
+    margin-top:30px;
+    font-size:16px;
+    color:#666;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-<img src="https://upload.wikimedia.org/wikipedia/ar/thumb/0/02/Ministry_of_Education_Saudi_Arabia_Logo.svg/512px-Ministry_of_Education_Saudi_Arabia_Logo.svg.png">
-وزارة التعليم – منطقة نجران
-</div>
+<div class="overlay"></div>
 
 <div class="container">
-<h2>🎈 حساب عمر الطفل 🎈</h2>
+<h1>حساب عمر الطفل للروضة</h1>
 
-<input type="date" id="birthdate"><br>
+<input type="date" id="birthdate">
+<br>
 <button onclick="calculateAge()">احسب العمر</button>
 
 <div class="result" id="result"></div>
-<div class="result" id="hijri"></div>
 
-<button class="print-btn" onclick="window.print()">🖨️ طباعة النتيجة</button>
-</div>
-
-<footer>
-مديره الروضه ومصممه الموقع :<br>
+<div class="footer">
+مديرة الروضة ومصممة الموقع :<br>
 <strong>فاطمه صالح ال بحري</strong>
-</footer>
-
-<audio id="sound">
-<source src="https://www.soundjay.com/human/sounds/applause-8.mp3">
-</audio>
+</div>
+</div>
 
 <script>
 function calculateAge(){
-const birthdate=document.getElementById("birthdate").value;
-if(!birthdate){ alert("اختاري تاريخ الميلاد"); return; }
+    let birthdate=document.getElementById("birthdate").value;
+    if(!birthdate){
+        alert("ادخلي تاريخ الميلاد");
+        return;
+    }
 
-const birth=new Date(birthdate);
-const today=new Date();
+    let birth=new Date(birthdate);
+    let today=new Date();
 
-let years=today.getFullYear()-birth.getFullYear();
-let months=today.getMonth()-birth.getMonth();
-let days=today.getDate()-birth.getDate();
+    let years=today.getFullYear()-birth.getFullYear();
+    let months=today.getMonth()-birth.getMonth();
+    let days=today.getDate()-birth.getDate();
 
-if(days<0){
-months--;
-days+=30;
-}
-if(months<0){
-years--;
-months+=12;
-}
+    if(days<0){
+        months--;
+        days+=30;
+    }
+    if(months<0){
+        years--;
+        months+=12;
+    }
 
-document.getElementById("result").innerHTML=
-"العمر: "+years+" سنة و "+months+" شهر و "+days+" يوم 🎉";
+    let hijri=new HijriDate(today);
 
-// التاريخ الهجري
-const hijri=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{
-day:'numeric',month:'long',year:'numeric'
-}).format(birth);
+    let eligibility="";
+    if(years>=3 && years<=6){
+        eligibility="✅ العمر مناسب للروضة";
+    }else if(years<3){
+        eligibility="❌ أصغر من سن القبول";
+    }else{
+        eligibility="❌ أكبر من سن القبول";
+    }
 
-document.getElementById("hijri").innerHTML=
-"تاريخ الميلاد هجري: "+hijri;
-
-document.getElementById("sound").play();
+    document.getElementById("result").innerHTML=
+    `
+    العمر: ${years} سنة و ${months} شهر و ${days} يوم <br><br>
+    📅 التاريخ الميلادي: ${today.toLocaleDateString()} <br>
+    🌙 التاريخ الهجري: ${hijri.getDate()} / ${hijri.getMonth()+1} / ${hijri.getFullYear()} هـ <br><br>
+    <strong>${eligibility}</strong>
+    `;
 }
 </script>
 
