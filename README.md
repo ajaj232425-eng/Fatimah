@@ -1,5 +1,5 @@
 <! فكره أ/ فاطمه صالح نحو الاستدامه>
-<!DOCTYPE html>
+<!l>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -10,226 +10,138 @@
         :root {
             --primary: #006d51;
             --gold: #d4af37;
-            --bg: #f4f7f6;
             --white: #ffffff;
+            --bg: #f8fbf9;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            margin: 0;
-            background-color: var(--bg);
-            color: #333;
-        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: var(--bg); overflow-x: hidden; }
 
         /* الهيدر */
         header {
             background: linear-gradient(135deg, var(--primary), #004d39);
-            color: white;
-            padding: 50px 20px;
-            text-align: center;
-            border-bottom: 6px solid var(--gold);
-            border-bottom-left-radius: 80px;
+            color: white; padding: 50px 20px; text-align: center; border-bottom: 8px solid var(--gold);
         }
 
-        .header-container img { width: 150px; filter: brightness(0) invert(1); margin-bottom: 15px; }
-        .inspirational-title { color: var(--gold); font-size: 1.4em; font-weight: bold; margin-top: 5px; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; position: relative; z-index: 1; }
 
-        .container { max-width: 1100px; margin: auto; padding: 20px; position: relative; z-index: 1; }
-
-        /* قسم الروضة الشفافة */
-        .transparency-section {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: -50px;
-            border: 1px solid #eee;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            color: var(--primary);
-            font-size: 1.6em;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-right: 5px solid var(--gold);
-            padding-right: 15px;
-        }
-
-        .transparency-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .info-card {
-            background: #fafafa;
-            padding: 20px;
-            border-radius: 20px;
-            border-right: 4px solid var(--gold);
-        }
-
-        /* قسم جواز السفر */
+        /* كروت المهارات */
         .passport-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 30px;
         }
 
         .passport-item {
-            background: var(--white);
-            padding: 35px 20px;
-            border-radius: 25px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid #eee;
-            transition: 0.3s;
+            background: white; padding: 30px; border-radius: 25px; text-align: center;
+            cursor: pointer; border: 1px solid #eee; transition: 0.3s;
+            position: relative; z-index: 5; /* طبقة منخفضة مقارنة بالنافذة */
         }
 
-        .passport-item:hover { transform: translateY(-5px); border-color: var(--gold); }
         .passport-item i { font-size: 45px; color: var(--primary); margin-bottom: 15px; }
 
-        /* الحل النهائي لمشكلة الظهور بالخلف */
-        #fixed-modal-overlay {
+        /* الحل الجذري: النافذة المنبثقة للأمام */
+        #exclusive-layer {
             display: none;
             position: fixed;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.9); /* تعتيم شبه كامل */
-            z-index: 999999 !important; /* أعلى طبقة ممكنة فوق كل الأيقونات */
-            backdrop-filter: blur(10px);
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); /* تعتيم كلي للخلفية */
+            z-index: 1000000 !important; /* طبقة مليون لضمان الانبثاق للأمام */
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px); /* غبش قوي جداً للأيقونات بالخلف */
         }
 
-        .modal-box {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+        .modal-card {
             background: white;
             width: 85%; max-width: 450px;
             padding: 40px;
-            border-radius: 30px;
+            border-radius: 35px;
             text-align: center;
-            border-top: 10px solid var(--gold);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            border-top: 12px solid var(--gold);
+            transform: scale(0.7); /* تبدأ صغيرة لتنبثق */
+            animation: popForward 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popForward {
+            to { transform: scale(1); } /* تنبثق للأمام */
         }
 
         .btn-close {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 15px;
-            cursor: pointer;
-            margin-top: 25px;
-            font-weight: bold;
+            background: var(--primary); color: white; border: none;
+            padding: 12px 40px; border-radius: 15px; cursor: pointer;
+            margin-top: 25px; font-weight: bold; font-size: 1.1em;
         }
 
-        .qa-float {
-            position: fixed;
-            bottom: 30px; left: 30px;
-            background: var(--gold);
-            color: white;
-            width: 65px; height: 65px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center; align-items: center;
-            font-size: 28px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        /* تذييل الصفحة مع الاسم */
+        /* تذييل الصفحة */
         footer {
-            background: var(--primary);
-            color: white;
-            padding: 50px 20px;
-            text-align: center;
-            margin-top: 60px;
-            border-top: 5px solid var(--gold);
+            background: var(--primary); color: white; padding: 60px 20px;
+            text-align: center; margin-top: 50px; border-top: 5px solid var(--gold);
         }
 
-        .footer-name {
-            font-size: 1.8em;
-            color: var(--gold);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+        .footer-name { font-size: 2em; color: var(--gold); font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" alt="وزارة التعليم">
-    <h1>منصة الإنجاز والشفافية الرقمية</h1>
-    <div class="inspirational-title">بوابة القائدة الملهمة</div>
-</header>
+<div id="main-content">
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" width="130" style="filter: brightness(0) invert(1);">
+        <h1>منصة الإنجاز والشفافية</h1>
+        <p>بوابة القائدة الملهمة</p>
+    </header>
 
-<div class="container">
-    
-    <section class="transparency-section">
-        <div class="section-title"><i class="fas fa-eye"></i> الروضة الشفافة</div>
-        <div class="transparency-grid">
-            <div class="info-card">
-                <h4><i class="fas fa-star"></i> قيمة الأسبوع</h4>
-                <p>"أنا طفل مسؤول" - تعزيز مهارة الاعتماد على النفس.</p>
+    <div class="container">
+        <h2 style="text-align: center; color: var(--primary); font-size: 1.8em;">جواز السفر الذكي للمهارات</h2>
+        
+        <div class="passport-grid">
+            <div class="passport-item" onclick="showModal('الاستقلال الذاتي', 'تمكين الطفل من الاعتماد على نفسه في مهاراته الحياتية وبناء شخصية مستقلة.')">
+                <i class="fas fa-user-check"></i>
+                <h3>الاستقلال الذاتي</h3>
             </div>
-            <div class="info-card">
-                <h4><i class="fas fa-apple-alt"></i> وجبتي الصحية</h4>
-                <p>التركيز على شرب الماء وتناول الفواكه الطازجة.</p>
+            <div class="passport-item" onclick="showModal('الطلاقة اللغوية', 'تعزيز القدرة على التعبير اللغوي وسرد القصص والحوار الواثق.')">
+                <i class="fas fa-comments"></i>
+                <h3>الطلاقة اللغوية</h3>
             </div>
-        </div>
-    </section>
-
-    <h2 style="text-align: center; color: var(--primary);">جواز السفر الذكي للمهارات</h2>
-    <div class="passport-grid">
-        <div class="passport-item" onclick="openMe('الاستقلال الذاتي', 'بناء شخصية الطفل ليكون قادراً على إدارة شؤونه الخاصة بثقة تامة.')">
-            <i class="fas fa-user-check"></i>
-            <h3>الاستقلال الذاتي</h3>
-        </div>
-        <div class="passport-item" onclick="openMe('الطلاقة اللغوية', 'تطوير مهارات الحوار والتحدث بطلاقة وثقة أمام الجمهور.')">
-            <i class="fas fa-comments"></i>
-            <h3>الطلاقة اللغوية</h3>
-        </div>
-        <div class="passport-item" onclick="openMe('الذكاء الوجداني', 'فهم المشاعر والتعامل مع الأقران بروح اجتماعية إيجابية.')">
-            <i class="fas fa-heart"></i>
-            <h3>الذكاء الوجداني</h3>
-        </div>
-        <div class="passport-item" onclick="openMe('مهارات المستقبل', 'تنمية مهارات التفكير الرقمي والابتكار لمواكبة رؤية الوطن.')">
-            <i class="fas fa-rocket"></i>
-            <h3>مهارات المستقبل</h3>
+            <div class="passport-item" onclick="showModal('الذكاء الوجداني', 'تنمية فهم المشاعر وبناء علاقات اجتماعية إيجابية مع الأقران.')">
+                <i class="fas fa-heart"></i>
+                <h3>الذكاء الوجداني</h3>
+            </div>
+            <div class="passport-item" onclick="showModal('مهارات المستقبل', 'تنمية مهارات التفكير المنطقي والابتكار الرقمي لمواكبة المستقبل.')">
+                <i class="fas fa-rocket"></i>
+                <h3>مهارات المستقبل</h3>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footer-name">فاطمه صالح آل بحري</div>
+        <p>القائدة التربوية الملهمة</p>
+        <p>نصنع الأثر.. ونبني الأجيال</p>
+        <p style="margin-top: 20px; font-size: 0.8em; opacity: 0.7;">جميع الحقوق محفوظة © 2026</p>
+    </footer>
 </div>
 
-<div id="fixed-modal-overlay">
-    <div class="modal-box">
-        <div style="font-size: 50px; color: var(--gold); margin-bottom: 10px;"><i class="fas fa-award"></i></div>
-        <h2 id="m-title" style="color: var(--primary);"></h2>
-        <p id="m-desc" style="font-size: 1.1em; line-height: 1.6;"></p>
-        <button class="btn-close" onclick="closeMe()">إغلاق</button>
+<div id="exclusive-layer">
+    <div class="modal-card">
+        <div style="font-size: 60px; color: var(--gold); margin-bottom: 20px;"><i class="fas fa-award"></i></div>
+        <h2 id="modal-title" style="color: var(--primary); font-size: 1.6em;"></h2>
+        <p id="modal-desc" style="line-height: 1.8; color: #444; font-size: 1.1em;"></p>
+        <button class="btn-close" onclick="hideModal()">إغلاق</button>
     </div>
 </div>
-
-<div class="qa-float" onclick="alert('سيتم فتح نظام الأسئلة قريباً')"><i class="fas fa-question-circle"></i></div>
-
-<footer>
-    <div class="footer-name">فاطمه صالح آل بحري</div>
-    <p>القائدة الملهمة للمنصة الرقمية</p>
-    <p>نصنع الأثر.. ونبني الأجيال</p>
-    <p style="margin-top:20px; font-size: 0.8em; opacity: 0.7;">حقوق التصميم محفوظة © 2026</p>
-</footer>
 
 <script>
-    function openMe(t, d) {
-        document.getElementById('m-title').innerText = t;
-        document.getElementById('m-desc').innerText = d;
-        document.getElementById('fixed-modal-overlay').style.display = 'block';
+    function showModal(title, desc) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-desc').innerText = desc;
+        document.getElementById('exclusive-layer').style.display = 'flex';
+        // منع التمرير في الخلفية
         document.body.style.overflow = 'hidden';
     }
-    function closeMe() {
-        document.getElementById('fixed-modal-overlay').style.display = 'none';
+
+    function hideModal() {
+        document.getElementById('exclusive-layer').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
 </script>
