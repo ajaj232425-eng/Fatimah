@@ -1,4 +1,5 @@
-<! فكره أ/ فاطمه صالح لدوام الاستدامه>
+<! فكره أ/ فاطمه صالح نحو الاستدامه>
+<!>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -9,189 +10,233 @@
         :root {
             --primary: #006d51;
             --gold: #d4af37;
-            --light-bg: #f8fbf9;
+            --bg: #f4f7f6;
             --white: #ffffff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0;
-            background-color: var(--light-bg);
+            background-color: var(--bg);
             color: #333;
         }
 
-        /* الهيدر */
+        /* الهيدر الملكي */
         header {
-            background: linear-gradient(45deg, var(--primary), #004d39);
+            background: linear-gradient(135deg, var(--primary), #004d39);
             color: white;
             padding: 50px 20px;
             text-align: center;
-            border-bottom: 8px solid var(--gold);
-            border-bottom-left-radius: 100px;
+            border-bottom: 6px solid var(--gold);
+            border-bottom-left-radius: 80px;
         }
+
+        .header-container img { width: 150px; filter: brightness(0) invert(1); margin-bottom: 15px; }
+        .inspirational-title { color: var(--gold); font-size: 1.4em; font-weight: bold; margin-top: 5px; }
 
         .container { max-width: 1100px; margin: auto; padding: 20px; }
 
-        /* قسم الأسئلة والأجوبة الجديد */
-        .qa-section {
-            margin-top: 50px;
-            background: white;
+        /* --- قسم الروضة الشفافة --- */
+        .transparency-section {
+            background: var(--white);
             padding: 30px;
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-top: -50px;
+            border: 1px solid #eee;
+            margin-bottom: 40px;
         }
 
-        .question-form {
-            background: #f9f9f9;
+        .section-title {
+            color: var(--primary);
+            font-size: 1.6em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 5px solid var(--gold);
+            padding-right: 15px;
+        }
+
+        .transparency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: #fafafa;
             padding: 20px;
             border-radius: 20px;
-            margin-bottom: 30px;
-            border: 2px dashed var(--gold);
+            border-right: 4px solid var(--gold);
+            transition: 0.3s;
         }
+        .info-card:hover { background: #fffdf5; }
+        .info-card h4 { margin: 0 0 10px 0; color: var(--primary); display: flex; align-items: center; gap: 8px; }
 
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            resize: none;
-            box-sizing: border-box;
-        }
-
-        .submit-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* عرض الأسئلة */
-        .questions-list {
+        /* --- قسم جواز السفر الذكي --- */
+        .passport-grid {
             display: grid;
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
-        .qa-card {
-            background: #fff;
-            border-right: 5px solid var(--gold);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .passport-item {
+            background: var(--white);
+            padding: 35px 20px;
+            border-radius: 25px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #eee;
+            transition: 0.4s;
         }
 
-        .qa-card .user-q { font-weight: bold; color: var(--primary); margin-bottom: 5px; }
-        .qa-card .admin-a { 
-            background: #f0f7f4; 
-            padding: 10px; 
-            border-radius: 8px; 
-            font-size: 0.9em; 
-            margin-top: 10px;
-            color: #444;
+        .passport-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
 
-        /* أيقونة منبثقة عائمة */
-        .floating-qa-btn {
+        .passport-item i { font-size: 45px; color: var(--primary); margin-bottom: 15px; }
+
+        /* --- النافذة المنبثقة (Modal) --- */
+        #modal-container {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 100000; /* طبقة عليا جداً */
+        }
+
+        .modal-overlay {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-body {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            width: 90%; max-width: 500px;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            border-top: 10px solid var(--gold);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* أيقونة السؤال */
+        .qa-float {
             position: fixed;
             bottom: 30px;
             left: 30px;
             background: var(--gold);
             color: white;
-            width: 65px;
-            height: 65px;
+            width: 65px; height: 65px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            font-size: 28px;
             cursor: pointer;
-            z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 9999;
         }
 
-        /* النافذة المنبثقة للأسئلة */
-        .qa-popup {
-            display: none;
-            position: fixed;
-            bottom: 110px;
-            left: 30px;
-            width: 350px;
-            max-height: 500px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 20px;
-            animation: slideIn 0.3s ease;
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
         }
-
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .close-qa { float: left; cursor: pointer; color: #999; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" width="150" alt="وزارة التعليم">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Ministry_of_Education_Saudi_Arabia_Logo.svg" alt="وزارة التعليم">
     <h1>منصة الإنجاز والشفافية الرقمية</h1>
-    <div style="color: var(--gold); font-weight: bold; font-size: 1.2em;">بوابة القائدة الملهمة</div>
+    <div class="inspirational-title">بوابة القائدة الملهمة</div>
 </header>
 
 <div class="container">
-    <p style="text-align: center;">مرحباً بكم في منصتنا التربوية التفاعلية</p>
-</div>
-
-<div class="floating-qa-btn" onclick="toggleQA()">
-    <i class="fas fa-comments"></i>
-</div>
-
-<div class="qa-popup" id="qaPopup">
-    <span class="close-qa" onclick="toggleQA()"><i class="fas fa-times"></i></span>
-    <h3 style="color: var(--primary); margin-top: 0;">اسأل القائدة وسنجيبك ✨</h3>
     
-    <div class="question-form">
-        <textarea id="qInput" placeholder="اكتب سؤالك هنا بوضوح..."></textarea>
-        <button class="submit-btn" onclick="addQuestion()">إرسال السؤال</button>
+    <section class="transparency-section">
+        <div class="section-title">
+            <i class="fas fa-eye"></i> الروضة الشفافة (تواصلنا الأسبوعي)
+        </div>
+        <div class="transparency-grid">
+            <div class="info-card">
+                <h4><i class="fas fa-star" style="color:var(--gold)"></i> قيمة الأسبوع</h4>
+                <p>"أنا طفل مسؤول" - نركز على تعليم الطفل تحمل مسؤولية أدواته الشخصية.</p>
+            </div>
+            <div class="info-card">
+                <h4><i class="fas fa-apple-alt" style="color:#e74c3c"></i> وجبتي الصحية</h4>
+                <p>نشجع أطفالنا هذا الأسبوع على تناول "الخضروات الورقية" لتقوية المناعة.</p>
+            </div>
+            <div class="info-card">
+                <h4><i class="fas fa-calendar-alt" style="color:#3498db"></i> فعالية الخميس</h4>
+                <p>مهرجان "المهن الصغيرة" - يرتدي الطفل زي المهنة التي يحبها.</p>
+            </div>
+        </div>
+    </section>
+
+    <h2 style="text-align: center; color: var(--primary); margin-bottom: 30px;">جواز السفر الذكي للمهارات</h2>
+    <div class="passport-grid">
+        <div class="passport-item" onclick="openModal('الاستقلال الذاتي', 'تمكين الطفل من الاعتماد على نفسه في المهارات الحياتية الأساسية وبناء ثقة قوية بالنفس.')">
+            <i class="fas fa-user-check"></i>
+            <h3>الاستقلال الذاتي</h3>
+        </div>
+        <div class="passport-item" onclick="openModal('الطلاقة اللغوية', 'تطوير قدرة الطفل على الحوار والتعبير وسرد القصص بأسلوب لغوي سليم.')">
+            <i class="fas fa-comments"></i>
+            <h3>الطلاقة اللغوية</h3>
+        </div>
+        <div class="passport-item" onclick="openModal('الذكاء الوجداني', 'فهم المشاعر والتعامل مع الآخرين بلطف وذكاء اجتماعي.')">
+            <i class="fas fa-heart"></i>
+            <h3>الذكاء الوجداني</h3>
+        </div>
+        <div class="passport-item" onclick="openModal('مهارات المستقبل', 'تنمية مهارات التفكير الناقد وحل المشكلات البسيطة بأساليب تقنية مبدعة.')">
+            <i class="fas fa-rocket"></i>
+            <h3>مهارات المستقبل</h3>
+        </div>
     </div>
 
-    <div class="questions-list" id="qList">
-        <div class="qa-card">
-            <div class="user-q">ولي أمر: ما هي مواعيد الزيارة الرسمية؟</div>
-            <div class="admin-a"><strong>رد القائدة:</strong> نسعد باستقبالكم يومي الاثنين والأربعاء من الساعة 10 صباحاً.</div>
-        </div>
-        <div class="qa-card">
-            <div class="user-q">ولي أمر: هل يوجد رحلات ميدانية قريباً؟</div>
-            <div class="admin-a"><strong>رد القائدة:</strong> نعم، سيتم الإعلان عن رحلة "عالم الاستكشاف" الأسبوع القادم بإذن الله.</div>
-        </div>
+</div>
+
+<div id="modal-container">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-body">
+        <div style="font-size: 50px; color: var(--gold); margin-bottom: 15px;"><i class="fas fa-award"></i></div>
+        <h2 id="m-title" style="color: var(--primary);"></h2>
+        <p id="m-desc" style="font-size: 1.1em; line-height: 1.8; color: #555;"></p>
+        <button onclick="closeModal()" style="background: var(--primary); color: white; border: none; padding: 12px 40px; border-radius: 15px; cursor: pointer; font-weight: bold; margin-top: 20px;">إغلاق</button>
     </div>
 </div>
+
+<div class="qa-float" onclick="alert('سيتم الرد على استفساراتكم قريباً عبر لوحة الأسئلة التفاعلية')">
+    <i class="fas fa-question-circle"></i>
+</div>
+
+<footer>
+    <p>نصنع الأثر.. ونبني الأجيال</p>
+    <p style="font-size: 0.9em; opacity: 0.8;">إدارة تعليم نجران - المملكة العربية السعودية 2026</p>
+</footer>
 
 <script>
-    function toggleQA() {
-        const popup = document.getElementById('qaPopup');
-        popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+    function openModal(title, desc) {
+        document.getElementById('m-title').innerText = title;
+        document.getElementById('m-desc').innerText = desc;
+        document.getElementById('modal-container').style.display = 'block';
+        document.body.style.overflow = 'hidden';
     }
 
-    function addQuestion() {
-        const input = document.getElementById('qInput');
-        if (input.value.trim() === "") return;
-
-        const list = document.getElementById('qList');
-        const newQA = document.createElement('div');
-        newQA.className = 'qa-card';
-        newQA.innerHTML = `
-            <div class="user-q">ولي أمر: ${input.value}</div>
-            <div class="admin-a" style="color: #d4af37;"><em>قيد المراجعة.. سيتم الرد قريباً</em></div>
-        `;
-        
-        list.prepend(newQA); // وضع السؤال الجديد في الأعلى
-        input.value = "";
-        alert("تم استلام سؤالك، وسيظهر الرد هنا فور اعتماد القائدة له ✅");
+    function closeModal() {
+        document.getElementById('modal-container').style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
 </script>
 
