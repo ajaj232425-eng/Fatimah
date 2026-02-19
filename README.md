@@ -7,11 +7,10 @@
     <title>منصة الإنجاز والشفافية | فاطمه صالح آل بحري</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #006d51; --gold: #d4af37; --bg-overlay: rgba(248, 251, 249, 0.92); }
+        :root { --primary: #006d51; --gold: #d4af37; --bg-overlay: rgba(248, 251, 249, 0.95); }
         
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; 
-            /* خلفية تعليمية راقية بنمط ناعم */
             background-image: url('https://www.transparenttextures.com/patterns/arabesque.png'), linear-gradient(135deg, #f0f4f2 0%, #e6eee9 100%);
             background-attachment: fixed;
             color: #333; line-height: 1.6; 
@@ -21,13 +20,11 @@
             background: linear-gradient(135deg, var(--primary), #004d39); 
             color: white; padding: 50px 20px; text-align: center; 
             border-bottom: 6px solid var(--gold);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
         }
 
-        .container { max-width: 800px; margin: auto; padding: 20px; position: relative; z-index: 1; }
+        .container { max-width: 800px; margin: auto; padding: 20px; position: relative; }
         
-        /* البطاقات المنبثقة من الخلفية */
         .card-panel {
             background: var(--bg-overlay);
             backdrop-filter: blur(10px);
@@ -37,33 +34,45 @@
             border: 1px solid rgba(255,255,255,0.6);
         }
 
-        /* المنسدلات */
+        /* المنسدلات للمهارات والروضة */
         .collapse-item { background: white; margin-bottom: 12px; border-radius: 15px; border: 1px solid #eee; overflow: hidden; transition: 0.3s; }
         .collapse-header { padding: 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
         .collapse-header i.main-icon { color: var(--gold); font-size: 1.3em; width: 30px; text-align: center; }
         .collapse-header h3 { margin: 0; font-size: 1.05em; color: var(--primary); }
         .collapse-content { max-height: 0; overflow: hidden; transition: 0.4s ease-out; background: #fafafa; }
-        .collapse-item.active { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .collapse-item.active .collapse-content { max-height: 300px; border-top: 1px solid #eee; }
         .collapse-item.active .chevron { transform: rotate(180deg); }
         .chevron { transition: 0.3s; color: var(--gold); }
 
-        /* نظام الأسئلة */
-        #qa-window {
-            position: fixed; bottom: 100px; left: 20px; right: 20px; 
-            max-width: 400px; background: white; border-radius: 25px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 2001;
-            display: none; overflow: hidden; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* --- خاصية المنسدلة لايقونة الأسئلة --- */
+        .qa-container {
+            position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+            display: flex; flex-direction: column-reverse; align-items: flex-start;
         }
-        @keyframes popIn { from { transform: translateY(50px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
-        
-        .qa-header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+
+        .qa-dropdown {
+            max-height: 0; width: 300px; background: white; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            margin-bottom: 15px; overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #eee;
+        }
+
+        .qa-container.active .qa-dropdown { max-height: 400px; }
+
         .qa-float { 
-            position: fixed; bottom: 30px; left: 30px; background: var(--gold); color: white; 
+            background: var(--gold); color: white; 
             width: 65px; height: 65px; border-radius: 50%; display: flex; 
             justify-content: center; align-items: center; font-size: 30px; 
-            cursor: pointer; z-index: 1000; box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+            cursor: pointer; box-shadow: 0 10px 25px rgba(212,175,55,0.5);
+            transition: transform 0.3s ease;
         }
+        .qa-container.active .qa-float { transform: rotate(45deg); background: #ff4d4d; }
+
+        .qa-header-text { background: var(--primary); color: white; padding: 15px; text-align: center; font-weight: bold; }
+        .qa-body-form { padding: 20px; }
+        .qa-body-form textarea { width: 100%; border: 1px solid #ddd; border-radius: 12px; padding: 10px; resize: none; font-family: inherit; box-sizing: border-box; }
+        .qa-body-form button { background: var(--primary); color: white; border: none; width: 100%; padding: 12px; border-radius: 12px; margin-top: 10px; cursor: pointer; font-weight: bold; }
 
         footer { background: var(--primary); color: white; padding: 50px 20px; text-align: center; margin-top: 60px; border-top: 5px solid var(--gold); }
     </style>
@@ -94,7 +103,7 @@
                     <div style="display:flex; align-items:center; gap:10px;"><i class="fas fa-lightbulb main-icon"></i> <h3>المبادرة الأسبوعية</h3></div>
                     <i class="fas fa-chevron-down chevron"></i>
                 </div>
-                <div class="collapse-content"><div style="padding:20px; background:#f0f7f3;"><b>مبادرة بصمتي الاجتماعية:</b> تشجيع الطفل على مساعدة أقرانه في الروضة.</div></div>
+                <div class="collapse-content"><div style="padding:20px; background:#f0f7f3;"><b>مبادرة بصمتي الاجتماعية:</b> تعزيز التواصل بين الطفل وأقرانه بالتقدير والشكر.</div></div>
             </div>
         </div>
 
@@ -120,15 +129,19 @@
 
     </div>
 
-    <div id="qa-window">
-        <div class="qa-header"><h4><i class="fas fa-comment-dots"></i> اسأل القائدة</h4></div>
-        <div style="padding: 20px;" id="qa-form">
-            <textarea id="userQ" rows="4" style="width:100%; border:1px solid #ddd; border-radius:10px; padding:10px;" placeholder="اكتب سؤالكِ هنا..."></textarea>
-            <button onclick="sendQ()" style="background:var(--primary); color:white; border:none; width:100%; padding:12px; border-radius:10px; margin-top:10px; cursor:pointer; font-weight:bold;">إرسال الآن</button>
+    <div class="qa-container" id="qaContainer">
+        <div class="qa-dropdown">
+            <div class="qa-header-text">تواصل مباشر مع القائدة</div>
+            <div class="qa-body-form" id="qaFormBody">
+                <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">يسعدنا الرد على استفساراتكم التربوية أستاذة فاطمه.</p>
+                <textarea id="userQuestion" rows="4" placeholder="اكتب سؤالكِ هنا..."></textarea>
+                <button onclick="sendQuestion()">إرسال الاستفسار</button>
+            </div>
+        </div>
+        <div class="qa-float" onclick="toggleQADropdown()">
+            <i class="fas fa-question" id="qaIcon"></i>
         </div>
     </div>
-
-    <div class="qa-float" onclick="toggleQA()"><i class="fas fa-question"></i></div>
 
     <footer>
         <h2 style="color:var(--gold); margin:0;">فاطمه صالح آل بحري</h2>
@@ -136,22 +149,43 @@
     </footer>
 
     <script>
+        // دالة المنسدلات العامة
         function toggleItem(el) {
             const item = el.parentElement;
             document.querySelectorAll('.collapse-item').forEach(i => { if (i !== item) i.classList.remove('active'); });
             item.classList.toggle('active');
         }
 
-        function toggleQA() {
-            const win = document.getElementById('qa-window');
-            win.style.display = (win.style.display === 'block') ? 'none' : 'block';
+        // دالة المنسدلة لأيقونة الأسئلة
+        function toggleQADropdown() {
+            const container = document.getElementById('qaContainer');
+            const icon = document.getElementById('qaIcon');
+            container.classList.toggle('active');
+            
+            if(container.classList.contains('active')) {
+                icon.className = 'fas fa-times'; // تغيير الأيقونة لإغلاق
+            } else {
+                icon.className = 'fas fa-question'; // إعادة الأيقونة لسؤال
+            }
         }
 
-        function sendQ() {
-            const q = document.getElementById('userQ').value;
+        // دالة إرسال السؤال التفاعلية
+        function sendQuestion() {
+            const q = document.getElementById('userQuestion').value;
             if(!q.trim()) return alert("يرجى كتابة السؤال أولاً");
-            document.getElementById('qa-form').innerHTML = `<div style="text-align:center; padding:20px;"><i class="fas fa-check-circle" style="color:var(--primary); font-size:3em;"></i><p>شكرًا لكِ أستاذة فاطمه، تم استلام سؤالكِ بنجاح.</p></div>`;
-            setTimeout(() => { toggleQA(); location.reload(); }, 3000);
+            
+            const formBody = document.getElementById('qaFormBody');
+            formBody.innerHTML = `
+                <div style="text-align:center; padding:10px;">
+                    <i class="fas fa-check-circle" style="color:var(--primary); font-size:2.5em; margin-bottom:10px;"></i>
+                    <p style="font-weight:bold; color:var(--primary);">تم الإرسال بنجاح!</p>
+                    <p style="font-size:0.8em;">شكرًا لكِ أستاذة فاطمه، تم استلام سؤالكِ.</p>
+                    <button onclick="toggleQADropdown()" style="background:var(--gold); margin-top:10px;">إغلاق</button>
+                </div>
+            `;
+            
+            // إعادة ضبط النموذج بعد 5 ثوانٍ
+            setTimeout(() => { location.reload(); }, 5000);
         }
     </script>
 </body>
